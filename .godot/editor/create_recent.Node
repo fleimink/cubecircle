@@ -1,0 +1,17 @@
+CollisionShape2D
+Area2D
+MeshInstance2D
+CharacterBody2D
+TextureButton
+Button
+Timer
+Label
+StaticBody2D
+Marker2D
+PathFollow2D
+Path2D
+VisibleOnScreenNotifier2D
+RigidBody2D
+CanvasLayer
+ColorRect
+Node

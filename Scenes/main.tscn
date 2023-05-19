@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://bqhrj7tn22rqi"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_f5ajp"]
+[ext_resource type="PackedScene" uid="uid://csgsho3gtumsd" path="res://Scenes/player.tscn" id="1_kjjsd"]
+[ext_resource type="PackedScene" uid="uid://cuk3cltq4m0lb" path="res://Scenes/enemy.tscn" id="2_lcsmt"]
+[ext_resource type="PackedScene" uid="uid://srw52vjwtt3m" path="res://Scenes/block.tscn" id="2_sj5iu"]
+[ext_resource type="PackedScene" uid="uid://cocci3ifundku" path="res://Scenes/hud.tscn" id="4_qug51"]
+
+[sub_resource type="Curve2D" id="Curve2D_4urex"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 2)
+}
+point_count = 2
+
+[node name="Main" type="Node"]
+script = ExtResource("1_f5ajp")
+mob_scene = ExtResource("2_lcsmt")
+
+[node name="Block" parent="." instance=ExtResource("2_sj5iu")]
+position = Vector2(-88, 597)
+
+[node name="Block2" parent="." instance=ExtResource("2_sj5iu")]
+position = Vector2(813, 599)
+
+[node name="HUD" parent="." instance=ExtResource("4_qug51")]
+
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_4urex")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+rotation = 0.00416664
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_right = 721.0
+offset_bottom = 1282.0
+
+[node name="Player" parent="." instance=ExtResource("1_kjjsd")]
+position = Vector2(239, 423)
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(380, 600)
+
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="pressed" from="TextureButton" to="Player" method="_on_texture_button_pressed"]
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]

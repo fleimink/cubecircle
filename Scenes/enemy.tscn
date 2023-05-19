@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuk3cltq4m0lb"]
+
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_ynrvc"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_e8ob5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnkbe"]
+size = Vector2(32, 32)
+
+[node name="Enemy" type="RigidBody2D"]
+collision_mask = 0
+script = ExtResource("1_ynrvc")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+scale = Vector2(32, 32)
+mesh = SubResource("QuadMesh_e8ob5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cnkbe")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(1.6, 1.6)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
